@@ -15,8 +15,23 @@ struct ContentView: View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 15) {
                 ForEach(viewModel.coins) { coin in
-                    Text(coin.symbol ?? "")
-                    
+                    HStack(spacing: 15) {
+                        Image(coin.symbol ?? "")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 60, height: 60)
+                        
+                        VStack(alignment: .leading) {
+                            Text(coin.symbol ?? "")
+                                .font(.title)
+                                .fontWeight(.bold)
+                            
+                            Text("$\(coin.quote?.USD?.price ?? 0)")
+                                .font(.body)
+                            
+                        }
+                    }
+                    .padding(.horizontal)
                 }
             }
         }
