@@ -11,15 +11,28 @@ import Alamofire
 
 class CryptoViewModel: ObservableObject {
     
+    @Published var coins: [Coin] = []
+    
+    init() {
+        fetchData()
+    }
+    
     func fetchData() {
         let headers: HTTPHeaders = [
             "Accepts": "application/json",
-            "X-CMC_PRO_API_KEY" : "1bd4e8e0-ce3b-4c32-a778-5f5fbe76b368",
+            "X-CMC_PRO_API_KEY" : "",
         ]
         
-        AF.request("https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest", headers: headers).responseJSON {
+        AF.request("https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest", headers: headers).response {
             response in
-            print(response)
+            guard let data = response.data else {return}
+            do {
+                let coinsData = try JSONDecoder().decode(Data.self, from: data)
+                self.coins = coinsData.data
+            }
+            catch {
+                print(error)
+            }
         }
         
     }

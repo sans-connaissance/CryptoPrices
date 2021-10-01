@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Data: Decodable {
-    var coins: [Coin]
+    var data: [Coin]
     
 }
 

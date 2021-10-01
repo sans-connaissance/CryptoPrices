@@ -12,11 +12,14 @@ struct ContentView: View {
     @ObservedObject var viewModel = CryptoViewModel()
     
     var body: some View {
-        Text("Hello, world!")
-            .padding()
-            .onAppear{
-                viewModel.fetchData()
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 15) {
+                ForEach(viewModel.coins) { coin in
+                    Text(coin.symbol ?? "")
+                    
+                }
             }
+        }
     }
 }
 
